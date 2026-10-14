@@ -1,11 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
 
-type TaskProps = {
+export type TaskType = {
   title: string;
   id: number;
   assignedTo?: string;
   status: "open" | "closed";
-} & { children: React.ReactNode };
+};
+
+type TaskProps = TaskType & { children?: React.ReactNode };
 
 export default function Task(props: TaskProps) {
   return (
@@ -20,9 +22,10 @@ export default function Task(props: TaskProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "90%",
+    width: "99%",
     alignSelf: "center",
-    backgroundColor: "#BA9E99",
-    marginVertical: 5,
+    marginVertical: 2,
+    padding: 5,
+    borderRadius: 5,
   },
 });
