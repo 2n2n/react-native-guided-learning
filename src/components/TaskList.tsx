@@ -3,6 +3,7 @@ import { View, FlatList, Text } from "react-native";
 import Task, { TaskType } from "./Task";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RadioButtonGroup from "./RadioButtonGroup";
+import AddTaskField from "./AddTaskField";
 
 type TaskListProps = {
   data: TaskType[];
@@ -32,6 +33,7 @@ export default function TaskList({ data }: TaskListProps) {
         paddingBottom: insets.bottom,
       }}
     >
+      <AddTaskField />
       <RadioButtonGroup
         labels={labels}
         onSelect={(label) => setActiveLabel(label)}
