@@ -1,18 +1,15 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Pressable,
-  TextInput,
-  View,
-  Text,
-  Alert,
-} from "react-native";
+import { StyleSheet, Pressable, TextInput, View, Text } from "react-native";
 
-export default function AddTaskField() {
+type AddTaskFieldProps = {
+  onAddTask: (task: string) => void;
+};
+export default function AddTaskField({ onAddTask }: AddTaskFieldProps) {
   const [inputText, setInputText] = useState("");
   const handleAddTask = () => {
-    Alert.alert("Add task", inputText);
+    onAddTask(inputText);
   };
+
   return (
     <View style={styles.container}>
       <TextInput
