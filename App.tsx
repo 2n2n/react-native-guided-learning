@@ -1,29 +1,25 @@
-import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import Test from "./src/libs/test";
-import CardTicket from "./src/components/CardTicket";
+import { StyleSheet, View } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import ComponentWithInsets from "./src/components/ComponentWithInsets";
+import Task from "./src/components/Task";
+import TaskDescription from "./src/components/TaskDescription";
 
 export default function App() {
-  useEffect(() => {
-    Test();
-  }, []);
   return (
-    <View style={styles.container}>
-      <CardTicket
-        title="Ticket 1"
-        onOpen={() => {
-          console.log("Ticket 1 opened");
-        }}
-      />
-    </View>
+    <SafeAreaProvider>
+      <ComponentWithInsets onSelect={() => console.log("open")} />
+
+      {Array.from({ length: 5 }).map((_, index) => (
+        <Task
+          key={`task-${index + 1}`}
+          title={`Task ${index + 1}`}
+          status="open"
+          assignedTo="John Doe"
+          id={index + 1}
+        >
+          <TaskDescription description="This is a task description" />
+        </Task>
+      ))}
+    </SafeAreaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
