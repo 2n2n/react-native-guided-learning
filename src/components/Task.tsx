@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet } from "react-native";
+import { useRouter } from "expo-router";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 
 export type TaskType = {
   title: string;
@@ -10,13 +11,20 @@ export type TaskType = {
 type TaskProps = TaskType & { children?: React.ReactNode };
 
 export default function Task(props: TaskProps) {
+  const router = useRouter();
   return (
-    <View style={styles.container}>
-      <Text>Task# {props.id}</Text>
-      <Text>{props.title}</Text>
-      <Text>{props.status}</Text>
-      {props.children}
-    </View>
+    <Pressable
+      onPress={() =>
+        router.push({ pathname: `/tasks/[id]`, params: { id: props.id } })
+      }
+    >
+      <View style={styles.container}>
+        <Text>Task# {props.id}</Text>
+        <Text>{props.title}</Text>
+        <Text>{props.status}</Text>
+        {props.children}
+      </View>
+    </Pressable>
   );
 }
 
