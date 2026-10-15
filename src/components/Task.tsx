@@ -19,7 +19,6 @@ export default function Task(props: TaskProps) {
       }
     >
       <View style={styles.container}>
-        <Text>Task# {props.id}</Text>
         <Text>{props.title}</Text>
         <Text>{props.status}</Text>
         {props.children}

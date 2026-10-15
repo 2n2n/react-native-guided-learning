@@ -1,8 +1,10 @@
 import { Link, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 
 export default function App() {
   const router = useRouter();
+
   return (
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={() => router.push("/tasks")}>

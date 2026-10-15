@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, FlatList, Text } from "react-native";
 import Task, { TaskType } from "./Task";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -6,6 +6,13 @@ import RadioButtonGroup from "./RadioButtonGroup";
 import AddTaskField from "./AddTaskField";
 
 const labels: string[] = ["All", "Open", "Closed"];
+
+export type TaskAPIResponseType = {
+  id: number;
+  title: string;
+  completed: boolean;
+  userId?: number;
+};
 
 const data: TaskType[] = [
   { id: 113, title: "Task 13", status: "open" },
@@ -29,7 +36,22 @@ export default function TaskList() {
     labels[0] ?? null,
   );
 
-  const [tasks, setTasks] = useState<TaskType[]>(data);
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+
+  useEffect(() => {
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then((response) => response.json())
+      .then((json) => {
+        const _tasks = json.map((_task: TaskAPIResponseType) => ({
+          id: _task.id,
+          title: _task.title,
+          status: _task.completed ? "closed" : "open",
+        }));
+
+        setTasks(_tasks);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   const list = tasks.filter((task) => {
     if (activeLabel === "All") {
