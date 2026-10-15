@@ -2,6 +2,7 @@ import { TaskType } from "@/components/Task";
 import { useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
+import { fetch } from "expo/fetch";
 
 export default function NewTask() {
   const { id } = useLocalSearchParams<{ id: string }>();

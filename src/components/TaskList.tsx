@@ -4,6 +4,7 @@ import Task, { TaskType } from "./Task";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RadioButtonGroup from "./RadioButtonGroup";
 import AddTaskField from "./AddTaskField";
+import { fetch } from "expo/fetch";
 
 const labels: string[] = ["All", "Open", "Closed"];
 
