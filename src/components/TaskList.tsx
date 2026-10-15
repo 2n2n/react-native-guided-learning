@@ -39,7 +39,13 @@ export default function TaskList() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos")
+    fetch("https://jsonplaceholder.typicode.com/todos", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((json) => {
         const _tasks = json.map((_task: TaskAPIResponseType) => ({
