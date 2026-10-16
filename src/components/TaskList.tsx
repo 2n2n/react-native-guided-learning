@@ -14,9 +14,9 @@ export type TaskAPIResponseType = {
   userId?: number;
 };
 
-const generateTaskId = (tasks: TaskType[]) => {
-  return (tasks.findLast((task) => task.id)?.id ?? 0) + 1;
-};
+// const generateTaskId = (tasks: TaskType[]) => {
+//   return (tasks.findLast((task) => task.id)?.id ?? 0) + 1;
+// };
 
 export default function TaskList({ tasks }: { tasks: TaskType[] }) {
   const insets = useSafeAreaInsets();
@@ -43,18 +43,18 @@ export default function TaskList({ tasks }: { tasks: TaskType[] }) {
     >
       <AddTaskField
         onAddTask={(title) => {
-          setTasks((previousState) => {
-            return [
-              ...previousState,
-              {
-                id: generateTaskId(previousState),
-                title: title,
-                status: (activeLabel?.toLocaleLowerCase() === "closed"
-                  ? activeLabel?.toLowerCase()
-                  : "open") as "open" | "closed",
-              },
-            ];
-          });
+          // setTasks((previousState) => {
+          //   return [
+          //     ...previousState,
+          //     {
+          //       id: generateTaskId(previousState),
+          //       title: title,
+          //       status: (activeLabel?.toLocaleLowerCase() === "closed"
+          //         ? activeLabel?.toLowerCase()
+          //         : "open") as "open" | "closed",
+          //     },
+          //   ];
+          // });
         }}
       />
       <RadioButtonGroup
