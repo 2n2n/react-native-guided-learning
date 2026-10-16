@@ -1,11 +1,10 @@
+import isValidInputText from "@/helpers/is-valid-input-text";
 import useTextInputValidation from "@/hooks/useTextInputValidation";
-import { useEffect } from "react";
+import { db } from "@/libs/firebase";
+import { addDoc, collection } from "firebase/firestore";
 import { StyleSheet, Pressable, TextInput, View, Text } from "react-native";
 
-type AddTaskFieldProps = {
-  onAddTask: (task: string) => void;
-};
-export default function AddTaskField({ onAddTask }: AddTaskFieldProps) {
+export default function AddTaskField() {
   const { inputText, setInputText, inputTextError, validateInputText } =
     useTextInputValidation({ fieldName: "title" });
 
@@ -21,6 +20,12 @@ export default function AddTaskField({ onAddTask }: AddTaskFieldProps) {
         <Pressable
           onPress={() => {
             validateInputText(inputText);
+            if (isValidInputText(inputText)) {
+              addDoc(collection(db, "Tasks"), {
+                title: inputText,
+                status: "open",
+              });
+            }
           }}
         >
           <Text style={styles.buttonText}>+</Text>

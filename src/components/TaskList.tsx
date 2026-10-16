@@ -4,7 +4,6 @@ import Task, { TaskType } from "./Task";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RadioButtonGroup from "./RadioButtonGroup";
 import AddTaskField from "./AddTaskField";
-import AddTaskDescriptionField from "./AddTaskDescriptionField";
 
 const labels: string[] = ["All", "Open", "Closed"];
 
@@ -14,10 +13,6 @@ export type TaskAPIResponseType = {
   completed: boolean;
   userId?: number;
 };
-
-// const generateTaskId = (tasks: TaskType[]) => {
-//   return (tasks.findLast((task) => task.id)?.id ?? 0) + 1;
-// };
 
 export default function TaskList({ tasks }: { tasks: TaskType[] }) {
   const insets = useSafeAreaInsets();
@@ -43,23 +38,8 @@ export default function TaskList({ tasks }: { tasks: TaskType[] }) {
         paddingBottom: insets.bottom,
       }}
     >
-      <AddTaskField
-        onAddTask={(title) => {
-          // setTasks((previousState) => {
-          //   return [
-          //     ...previousState,
-          //     {
-          //       id: generateTaskId(previousState),
-          //       title: title,
-          //       status: (activeLabel?.toLocaleLowerCase() === "closed"
-          //         ? activeLabel?.toLowerCase()
-          //         : "open") as "open" | "closed",
-          //     },
-          //   ];
-          // });
-        }}
-      />
-      <AddTaskDescriptionField onAddTask={(description) => {}} />
+      <AddTaskField />
+
       <RadioButtonGroup
         labels={labels}
         onSelect={(label) => setActiveLabel(label)}

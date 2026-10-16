@@ -1,29 +1,30 @@
 import { TaskType } from "@/components/Task";
-import { TaskAPIResponseType } from "@/components/TaskList";
+import { db } from "@/libs/firebase";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function useTasks() {
   const [tasks, setTasks] = useState<TaskType[]>([]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const _tasks = json.map((_task: TaskAPIResponseType) => ({
-          id: _task.id,
-          title: _task.title,
-          status: _task.completed ? "closed" : "open",
-        }));
+    // initial load of the list from firebase
+    getDocs(collection(db, "Tasks")).then((snapshot) => {
+      let _tasks: TaskType[] = snapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() } as unknown as TaskType;
+      });
+      setTasks(_tasks);
+    });
+  }, []);
 
-        setTasks(_tasks);
-      })
-      .catch((error) => console.error(error));
+  // listen to task collection changes.
+  useEffect(() => {
+    const unsubscribe = onSnapshot(collection(db, "Tasks"), (snapshot) => {
+      let _tasks: TaskType[] = snapshot.docs.map((doc) => {
+        return { id: doc.id, ...doc.data() } as unknown as TaskType;
+      });
+      setTasks(_tasks);
+    });
+    return () => unsubscribe();
   }, []);
 
   return { tasks };

@@ -2,7 +2,7 @@ import { useRouter } from "expo-router";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 
 export type TaskType = {
-  title: string;
+  title: string | number;
   id: number;
   assignedTo?: string;
   status: "open" | "closed";
