@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { View, FlatList, Text } from "react-native";
 import Task, { TaskType } from "./Task";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RadioButtonGroup from "./RadioButtonGroup";
 import AddTaskField from "./AddTaskField";
-import { fetch } from "expo/fetch";
 
 const labels: string[] = ["All", "Open", "Closed"];
 
@@ -15,50 +14,16 @@ export type TaskAPIResponseType = {
   userId?: number;
 };
 
-const data: TaskType[] = [
-  { id: 113, title: "Task 13", status: "open" },
-  { id: 114, title: "Task 14", status: "closed" },
-  { id: 115, title: "Task 15", status: "closed" },
-  { id: 116, title: "Task 16", status: "open" },
-  { id: 117, title: "Task 17", status: "open" },
-  { id: 118, title: "Task 18", status: "open" },
-  { id: 119, title: "Task 19", status: "open" },
-  { id: 120, title: "Task 20", status: "open" },
-];
-
 const generateTaskId = (tasks: TaskType[]) => {
   return (tasks.findLast((task) => task.id)?.id ?? 0) + 1;
 };
 
-export default function TaskList() {
+export default function TaskList({ tasks }: { tasks: TaskType[] }) {
   const insets = useSafeAreaInsets();
 
   const [activeLabel, setActiveLabel] = useState<string | null>(
     labels[0] ?? null,
   );
-
-  const [tasks, setTasks] = useState<TaskType[]>([]);
-
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        const _tasks = json.map((_task: TaskAPIResponseType) => ({
-          id: _task.id,
-          title: _task.title,
-          status: _task.completed ? "closed" : "open",
-        }));
-
-        setTasks(_tasks);
-      })
-      .catch((error) => console.error(error));
-  }, []);
 
   const list = tasks.filter((task) => {
     if (activeLabel === "All") {
@@ -103,7 +68,7 @@ export default function TaskList() {
         renderItem={renderRow}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={{
-          justifyContent: data.length > 0 ? "flex-start" : "center",
+          justifyContent: list.length > 0 ? "flex-start" : "center",
         }}
         ListEmptyComponent={
           <Text

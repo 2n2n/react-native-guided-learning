@@ -2,9 +2,12 @@ import TaskList from "@/components/TaskList";
 import TaskListCounter from "@/components/TaskListCounter";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import useTasks from "@/hooks/useTasks";
 
 export default function Tasks() {
   const insets = useSafeAreaInsets();
+  const { tasks } = useTasks();
+
   return (
     <View
       style={{
@@ -14,8 +17,8 @@ export default function Tasks() {
         paddingBottom: insets.bottom,
       }}
     >
-      <TaskList />
-      <TaskListCounter />
+      <TaskListCounter count={tasks.length} />
+      <TaskList tasks={tasks} />
     </View>
   );
 }
