@@ -1,29 +1,12 @@
-import { useState } from "react";
+import useTextInputValidation from "@/hooks/useTextInputValidation";
 import { StyleSheet, Pressable, TextInput, View, Text } from "react-native";
 
 type AddTaskFieldProps = {
   onAddTask: (task: string) => void;
 };
 export default function AddTaskField({ onAddTask }: AddTaskFieldProps) {
-  const [inputText, setInputText] = useState("");
-  const [inputTextError, setInputTextError] = useState("");
-
-  const validateInputText = (_inputText: string) => {
-    if (_inputText.trim() === "") {
-      setInputTextError("Task title is required");
-      return false;
-    } else {
-      setInputTextError("");
-      return true;
-    }
-  };
-  const handleAddTask = () => {
-    if (!validateInputText(inputText)) {
-      return;
-    }
-    onAddTask(inputText);
-    setInputText("");
-  };
+  const { inputText, setInputText, inputTextError, validateInputText } =
+    useTextInputValidation({ fieldName: "title" });
 
   return (
     <View style={styles.container}>
@@ -34,7 +17,15 @@ export default function AddTaskField({ onAddTask }: AddTaskFieldProps) {
           value={inputText}
           onChangeText={setInputText}
         />
-        <Pressable onPress={handleAddTask}>
+        <Pressable
+          onPress={() => {
+            if (!validateInputText(inputText)) {
+              return;
+            }
+            onAddTask(inputText);
+            setInputText("");
+          }}
+        >
           <Text style={styles.buttonText}>+</Text>
         </Pressable>
       </View>

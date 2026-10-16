@@ -4,6 +4,7 @@ import Task, { TaskType } from "./Task";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RadioButtonGroup from "./RadioButtonGroup";
 import AddTaskField from "./AddTaskField";
+import AddTaskDescriptionField from "./AddTaskDescriptionField";
 
 const labels: string[] = ["All", "Open", "Closed"];
 
@@ -57,6 +58,7 @@ export default function TaskList({ tasks }: { tasks: TaskType[] }) {
           // });
         }}
       />
+      <AddTaskDescriptionField onAddTask={(description) => {}} />
       <RadioButtonGroup
         labels={labels}
         onSelect={(label) => setActiveLabel(label)}
