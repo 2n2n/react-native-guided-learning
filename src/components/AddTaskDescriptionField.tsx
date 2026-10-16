@@ -1,11 +1,23 @@
+import isValidInputText from "@/helpers/is-valid-input-text";
 import useTextInputValidation from "@/hooks/useTextInputValidation";
-import { Pressable, TextInput, View, Text, StyleSheet } from "react-native";
+import {
+  Pressable,
+  TextInput,
+  View,
+  Text,
+  StyleSheet,
+  Alert,
+} from "react-native";
 
-export default function AddTaskDescriptionField() {
-  const { inputText, setInputText, inputTextError, validateInputText } =
-    useTextInputValidation({
-      fieldName: "description",
-    });
+type AddTaskDescriptionFieldProps = {
+  onAddTask: (description: string) => void;
+};
+export default function AddTaskDescriptionField({
+  onAddTask,
+}: AddTaskDescriptionFieldProps) {
+  const { inputText, setInputText, inputTextError } = useTextInputValidation({
+    fieldName: "description",
+  });
 
   return (
     <View style={styles.container}>
@@ -18,10 +30,11 @@ export default function AddTaskDescriptionField() {
         />
         <Pressable
           onPress={() => {
-            if (!validateInputText(inputText)) {
-              return;
+            if (!isValidInputText(inputText)) {
+              Alert.alert("Description is required");
+            } else {
+              Alert.alert("Description added successfully");
             }
-            setInputText("");
           }}
         >
           <Text style={styles.buttonText}>+</Text>

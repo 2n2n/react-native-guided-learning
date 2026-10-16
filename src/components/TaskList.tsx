@@ -34,6 +34,7 @@ export default function TaskList({ tasks }: { tasks: TaskType[] }) {
   });
 
   const renderRow = ({ item }: { item: TaskType }) => <Task {...item} />;
+
   return (
     <View
       style={{

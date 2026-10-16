@@ -1,8 +1,10 @@
+import isValidInputText from "@/helpers/is-valid-input-text";
 import { useState } from "react";
 
 type useTextInputValidationProps = {
   fieldName: string;
 };
+
 export default function useTextInputValidation({
   fieldName = "title",
 }: useTextInputValidationProps) {
@@ -10,12 +12,10 @@ export default function useTextInputValidation({
   const [inputTextError, setInputTextError] = useState("");
 
   const validateInputText = (_inputText: string) => {
-    if (_inputText.trim() === "") {
+    if (!isValidInputText(_inputText)) {
       setInputTextError(`Task ${fieldName} is required`);
-      return false;
     } else {
       setInputTextError("");
-      return true;
     }
   };
 

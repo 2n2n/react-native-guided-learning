@@ -1,4 +1,5 @@
 import useTextInputValidation from "@/hooks/useTextInputValidation";
+import { useEffect } from "react";
 import { StyleSheet, Pressable, TextInput, View, Text } from "react-native";
 
 type AddTaskFieldProps = {
@@ -19,11 +20,7 @@ export default function AddTaskField({ onAddTask }: AddTaskFieldProps) {
         />
         <Pressable
           onPress={() => {
-            if (!validateInputText(inputText)) {
-              return;
-            }
-            onAddTask(inputText);
-            setInputText("");
+            validateInputText(inputText);
           }}
         >
           <Text style={styles.buttonText}>+</Text>

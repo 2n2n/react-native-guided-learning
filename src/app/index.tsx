@@ -1,4 +1,4 @@
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 
 export default function App() {
