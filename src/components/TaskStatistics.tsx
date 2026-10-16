@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import { useContext } from "react";
-import { TaskContext } from "@/app/tasks";
+import { TaskContext } from "@/contexts/task-context";
 
 export default function TaskStatistics() {
   const tasks = useContext(TaskContext);

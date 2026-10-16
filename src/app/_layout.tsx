@@ -1,5 +1,10 @@
+import { TaskContextProvider } from "@/contexts/task-context";
 import { Stack } from "expo-router";
 
 export default function Layout() {
-  return <Stack />;
+  return (
+    <TaskContextProvider>
+      <Stack />
+    </TaskContextProvider>
+  );
 }

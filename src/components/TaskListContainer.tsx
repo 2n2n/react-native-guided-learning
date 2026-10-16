@@ -2,8 +2,9 @@ import { View } from "react-native";
 import TaskListCounter from "./TaskListCounter";
 import TaskList from "./TaskList";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { TaskContext } from "@/app/tasks";
+
 import { useContext } from "react";
+import { TaskContext } from "@/contexts/task-context";
 
 export default function TaskListContainer() {
   const insets = useSafeAreaInsets();

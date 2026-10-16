@@ -6,26 +6,21 @@ import TaskStatistics from "@/components/TaskStatistics";
 import { createContext } from "react";
 import { TaskType } from "@/components/Task";
 
-export const TaskContext = createContext<TaskType[]>([]);
-
 export default function Tasks() {
   const insets = useSafeAreaInsets();
-  const { tasks } = useTasks();
 
   return (
-    <TaskContext.Provider value={tasks}>
-      <View
-        style={{
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-          paddingHorizontal: insets.left,
-          paddingRight: insets.right,
-          flex: 1,
-        }}
-      >
-        <TaskListContainer />
-        <TaskStatistics tasks={tasks} />
-      </View>
-    </TaskContext.Provider>
+    <View
+      style={{
+        paddingTop: insets.top,
+        paddingBottom: insets.bottom,
+        paddingHorizontal: insets.left,
+        paddingRight: insets.right,
+        flex: 1,
+      }}
+    >
+      <TaskListContainer />
+      <TaskStatistics />
+    </View>
   );
 }
